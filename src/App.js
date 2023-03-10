@@ -1,10 +1,22 @@
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+
+import Category from './Category';
+import Home from './home';
+
+
+
 
 
 function App() {
   return (
-    <div className="App">
-   <h1>Heelo</h1>
-    </div>
+
+    <Router>
+      <Routes>
+        <Route path='/' exact={true} element={<Home/>}/>
+        <Route path='/categories' exact={true} element={<Category/>}/>
+      </Routes>
+    </Router>
+
   );
 }
 
