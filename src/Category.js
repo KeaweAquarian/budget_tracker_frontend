@@ -93,11 +93,14 @@ if(isLoading)
                    <AppNav />
                    <div style={{marginLeft:"30px"}}>
                     <h2>Categories</h2>
+                    
             <div className='alert alert-secondary p-2 d-flex align-items-center justify-content-between' style={{width:"200px"}}>
 
 				<EditCategory onAdd={addCatagory}  />
 
 		</div>
+                    {
+                      Categories.length > 0 ? (
                      <ListGroup as="ol" style={{"width":'400px'}} >
                     
                     {
@@ -114,6 +117,11 @@ if(isLoading)
                         
                         }
                         </ListGroup>
+                      ):(
+                        "No categories defined."
+                      )
+                    }
+
                    </div>
 
 

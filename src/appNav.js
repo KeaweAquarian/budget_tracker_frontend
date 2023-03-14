@@ -15,6 +15,9 @@ const appNav = () => {
                   <NavItem>
                     <NavLink href="/categories">Categories</NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink href="/expenses">Expences</NavLink>
+                  </NavItem>
 
                 
                 </Nav>
