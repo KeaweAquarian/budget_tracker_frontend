@@ -5,11 +5,9 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 
-const AddExpense = ({submitExpense, categories}) => {
+const AddExpense = ({submitExpense, categories, totalExpense}) => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState({id:101, name:"Travel"});
-  const [categoryName, setCategoryName] =  useState('bbo')
-  const [categoryId, setCategoryId] = useState(103)
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState("");
   const [amount, setAmount] = useState("")
@@ -26,38 +24,23 @@ const AddExpense = ({submitExpense, categories}) => {
     }
 
    
-
-    submitExpense({ description, date, location, amount, category })
+    console.log(date)
+    submitExpense({ description, date, location, amount, category }, amount)
 
     setDescription('')
-    // setCategory([])
-    // setCategoryName("Travel")
-    // setCategoryId(101)
     setDate(new Date())
     setLocation("")
     setAmount("")
   }
 
-  const findCategoryName = (e)=>{
-    setCategoryId(e)
-    
+  const findCategoryName = (id)=>{
     categories.map( (category) => {
-        if(category.id == e){
-            
-     setCategoryName(category.name)
+        if(category.id == id){
    
      setCategory(category)
-    
-
-        } 
-        
-         
+        }    
     })
-  
-       
   }
-
-
 
           let optionList  =
                 categories.map( (category) =>
@@ -96,7 +79,7 @@ const AddExpense = ({submitExpense, categories}) => {
 
                     <FormGroup>
                         <Label for="expensedate">Date</Label>
-                        <DatePicker  value={date}  selected={date}  onChange={(e) => setDate(e.target.value)} />
+                        <DatePicker  value={date}  selected={date}  onChange={(e) => setDate(e)} />
                     </FormGroup>
 
                     <div className="row">

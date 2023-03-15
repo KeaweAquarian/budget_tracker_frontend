@@ -10,6 +10,7 @@ import Remaining from './components/Remaining';
 import ExpenseTotal from './components/ExpenseTotal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddExpense from './components/AddExpense';
+import { calculateNewValue } from '@testing-library/user-event/dist/utils';
 
 
 
@@ -25,26 +26,32 @@ const Expenses = () => {
         category : {id:1 , name:'Travel'}
     }
   );
-  const [budget, setBudget] = useState(2000);
+  const [budget, setBudget] = useState(20000);
   const [isLoading, setIsLoading] = useState(false);
   const [Categories, setCategories] = useState([]);
   const [Expenses , setExpenses ] = useState([]);
-  const [date, setDate] = useState(new Date());
   const [expenseTotal, setExpenseTotal] = useState(0);
+
+
 
 
     useEffect(() => {
     const getCategories = async () => {
       const categoriesFromServer = await fetchCategories()
       setCategories(categoriesFromServer)
+
     }
       const getExpenses = async () => {
       const expensesFromServer = await fetchExpenses()
       setExpenses(expensesFromServer)
+      calculateTotalExpenses(expensesFromServer, 0)
+      
+     
     }
 
     getExpenses()
     getCategories()
+   
   }, [])
 
   // Fetch Catagories
@@ -52,7 +59,6 @@ const Expenses = () => {
     const response=await fetch('http://localhost:5000/api/categories');
         const body = await response.json();
         setIsLoading(false);
-
     return body
   }
 
@@ -61,17 +67,15 @@ const Expenses = () => {
     const response=await fetch('http://localhost:5000/api/expenses');
         const body = await response.json();
         setIsLoading(false);
-
     return body
   }
   
    const handleBudget = ()=>{
       // this.setState({budget:value});
-      console.log("handle Budget fired")
+    //  console.log("hi")
     }
 
-    const adjustEmptyItem= (e)=>{
-      console.log(e)
+    const adjustEmptyItem= (e, a)=>{
           let idd = 0;
     let namee = "";
     // e.category.map((details=>(
@@ -90,25 +94,12 @@ const Expenses = () => {
         amount:e.amount,
         category : {id:idd , name:namee}
     })
-    submitExpense(item)
+    submitExpense(item, a)
     }
 
     //Add expense
-   const submitExpense = async (item)=>{
-  // const item = emptyItem;
-  console.log(item)
-    
-  
+   const submitExpense = async (item, a)=>{
 
-   
-    // emptyItem.description = e.description
-    // emptyItem.amount = e.amount
-    // // emptyItem.category = e.category
-    // // emptyItem.category.name= e.category.name
-    // emptyItem.expensedate = e.date
-    // emptyItem.location = e.location
-    // emptyItem.date = e.date
-    // console.log(emptyItem)
 
     const res =  await fetch(`http://localhost:5000/api/expenses`, {
         method : 'POST',
@@ -122,6 +113,7 @@ const Expenses = () => {
       const data =await res.json()
       setExpenses([...Expenses, data])
       
+      calculateTotalExpenses(Expenses, a)
 
     }
 
@@ -137,15 +129,52 @@ const Expenses = () => {
 
               </tr>
             )
+            const total = expenseTotal;
+        const calculateTotalExpenses = (e, a)=> {
+          let total = 0;
+          e.forEach((expense)=>{
+          total = total + expense.amount;
+          })
+          console.log(a)
+          total = total + a;
+          setExpenseTotal(total + a)
+        
 
-   
+        }
+                const calculateTotalExpenses2 = ()=> {
+          let total = 0;
+          Expenses.forEach((expense)=>{
+          total = total + expense.amount;
+          })
+          
+          setExpenseTotal(total)
+
+        }
+
+        
+
 
 
         return (
             <div >
 
           <AppNav/>
-          <AddExpense submitExpense={adjustEmptyItem} categories={Categories}/>
+            <div className='container'>
+           <div className='row mt-3'>
+					<div className='col-sm'>
+						<Budget budget = {Math.round(budget * 100) / 100} budgetChange={handleBudget()} />
+					</div>
+					<div className='col-sm'>
+						<Remaining remaining={Math.round((budget-expenseTotal) * 100) / 100}/>
+					</div>
+					<div className='col-sm'>
+						<ExpenseTotal total={Math.round(total * 100) / 100 }/>
+					</div>
+				</div>
+               </div>
+
+          <AddExpense submitExpense={adjustEmptyItem} categories={Categories} totalExpense={setExpenseTotal}/>
+          
 
               <Container>
                 <h3>Expense List</h3>
