@@ -1,6 +1,30 @@
-import React from 'react';
+import React, { useState, useContext, useEffect} from 'react';
+import { ApiContext } from './context/ApiContext';
 
-const Remaining = ({remaining}) => {
+
+
+const Remaining = ({budget}) => {
+	 const [expensesList, setExpensesList] = useContext(ApiContext)
+     const [expenseTotal, setExpenseTotal] = useState(0);
+
+        const calculateTotalExpenses = ()=> {
+          let total = 0;
+          expensesList.forEach((expense)=>{
+          total = total + expense.amount;
+          })
+  
+          
+          setExpenseTotal(total)
+        
+
+        }
+
+useEffect(() => {
+    calculateTotalExpenses()
+  }, [expensesList])
+
+
+	let remaining = Math.round((budget-expenseTotal)*100)/100;
 	
 	const balanceAlert= remaining > 0 ?  'alert-success' : 'alert-danger'
 	return (

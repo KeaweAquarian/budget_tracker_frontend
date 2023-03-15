@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 
-const AddExpense = ({submitExpense, categories, totalExpense}) => {
+const AddExpense = ({submitExpense, categories}) => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState({id:101, name:"Travel"});
   const [date, setDate] = useState(new Date());
@@ -23,9 +23,7 @@ const AddExpense = ({submitExpense, categories, totalExpense}) => {
       return
     }
 
-   
-    console.log(date)
-    submitExpense({ description, date, location, amount, category }, amount)
+    submitExpense({ description, date, location, amount, category })
 
     setDescription('')
     setDate(new Date())

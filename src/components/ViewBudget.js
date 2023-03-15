@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ViewBudget = (props) => {
+const ViewBudget = ({budget, handleEditClick}) => {
 	return (
 		<>
-			<div>Budget: ${props.budget}</div>
-			<button type='button'  className='btn btn-primary' onClick={props.handleEditClick}>
-				Save
+			<div>Budget: ${budget}</div>
+			<button type='button'  className='btn btn-primary' onClick={handleEditClick}>
+				Edit
 			</button>
 		</>
 	);

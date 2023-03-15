@@ -5,9 +5,8 @@ import ViewBudget from './ViewBudget';
 import EditBudget from './EditBudget';
 // import { AppContext } from '../context/AppContext';
 
-const Budget = (props) => {
-	// const { budget, changeBudget } = useState(2000);
-	const [budget, setBudget] = useState(0);
+const Budget = ({budget, budgetChange}) => {
+
 	const [isEditing, setIsEditing] = useState(false);
     
 	const handleEditClick = () => {
@@ -15,8 +14,7 @@ const Budget = (props) => {
 	};
 
 	const handleSaveClick = (value) => {
-        console.log(value)
-	    props.budgetChange(value);
+	    budgetChange(value);
 		setIsEditing(false);
 	};
 
@@ -26,7 +24,7 @@ const Budget = (props) => {
 				<EditBudget handleSaveClick={handleSaveClick}  />
 			) : (
 				// For part 1 render component inline rather than create a seperate one
-				<ViewBudget handleEditClick={handleEditClick} budget={props.budget} />
+				<ViewBudget handleEditClick={handleEditClick} budget={budget} />
 			)}
 		</div>
 	);

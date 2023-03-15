@@ -1,26 +1,29 @@
-import {React, useState} from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import Expsenses from '../Expenses';
+import { ApiContext } from './context/ApiContext';
+const ExpenseTotal = () => {
 
-const ExpenseTotal = (props) => {
-	
-	
+	 const [expensesList, setExpensesList] = useContext(ApiContext)
+     const [expenseTotal, setExpenseTotal] = useState(0);
 
-	// console.log(props)
 
-	// setTotal(props.reduce((a,v) =>  a = a + v.amount , 0 ))
-	
+useEffect(() => {
+    calculateTotalExpenses()
+  }, [expensesList])
 
-// props.map((order) => {
-// setTotal(total + order.carttotal)}
     
-//    let sum = 0
-// props.map(e => sum += e)
-// console.log(sum);
+        const calculateTotalExpenses = ()=> {
+          let total = 0;
+          expensesList.forEach((expense)=>{
+          total = total + expense.amount;
+          })       
+          setExpenseTotal(total)
+        }
 	
 	return (
 		
 		<div className='alert alert-primary p-3' style={{height:"60px"}}>
-			<div>Exspense total ${props.total}</div>
+			<div>Exspense total ${expenseTotal.toFixed(2)}</div>
 		</div>
 	);
 };
