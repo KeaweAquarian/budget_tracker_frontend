@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const AddExpense = ({submitExpense, categories, changeShow}) => {
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState({id:101, name:"Travel"});
+  const [category, setCategory] = useState({id:1, name:"Travel"});
   const [date, setDate] = useState(new Date());
   const [location, setLocation] = useState("");
   const [amount, setAmount] = useState("")

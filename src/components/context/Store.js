@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { ApiContext } from './ApiContext';
+import { useLocalState } from '../../util/useLocalStorage';
 
 function Store({ children }) {
 //   const [isLoading, setIsLoading] = useState(false);
   const [expensesList , setExpensesList ] = useState([]);
+  const [jwt, setJwt] = useLocalState("", "jwt");
 
     useEffect(() => {
       const getExpenses = async () => {
@@ -18,9 +20,14 @@ function Store({ children }) {
 
     // Fetch Expenses
   const fetchExpenses = async () => {
-    const response=await fetch('http://localhost:5000/api/expenses');
+    const response=await fetch('http://localhost:5000/api/expenses', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt}`}}
+    );
         const body = await response.json();
         // setIsLoading(false);
+        console.log(body)
     return body
   }
   return (

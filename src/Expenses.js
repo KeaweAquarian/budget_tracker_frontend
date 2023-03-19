@@ -9,6 +9,8 @@ import AddExpense from './components/AddExpense';
 import { ApiContext } from './components/context/ApiContext';
 import Expense from './components/Expense';
 import AddButton from './components/AddButton';
+import { useLocalState } from './util/useLocalStorage';
+
 
 
 const Expenses = () => {
@@ -17,7 +19,7 @@ const Expenses = () => {
   const [Categories, setCategories] = useState([]);
   const [expenseList, setExpenseList] = useContext(ApiContext);
   const [show, setShow] = useState(false);
-
+const [jwt, setJwt] = useLocalState("", "jwt");
 
 
     useEffect(() => {
@@ -33,8 +35,14 @@ const Expenses = () => {
 
   // Fetch Catagories
   const fetchCategories = async () => {
-    const response=await fetch('http://localhost:5000/api/categories');
+    
+    const response=await fetch('http://localhost:5000/api/categories', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt}`}}
+    )
         const body = await response.json();
+        console.log(body)
         // setIsLoading(false);
     return body
   }
@@ -67,7 +75,8 @@ const Expenses = () => {
         RequestMode:'no-cors',
         headers : {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`
         },
         body : JSON.stringify(item),
       })

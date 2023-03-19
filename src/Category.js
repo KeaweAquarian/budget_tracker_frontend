@@ -4,6 +4,7 @@ import { useState} from 'react';
 import EditCategory from './components/EditCategory';
 import ListGroup from 'react-bootstrap/ListGroup';
 import DeleteButton from './components/DeleteButton';
+import { useLocalState } from './util/useLocalStorage';
 
 
 
@@ -11,7 +12,7 @@ const Category = () => {
   
     const [isLoading, setIsLoading] = useState(true);
     const [Categories, setCatagories] = useState([]);
-
+const [jwt, setJwt] = useLocalState("", "jwt");
 
     // const handleSaveClick = (category) => {
     //     addCatagory(category)
@@ -29,8 +30,13 @@ const Category = () => {
 
   // Fetch Catagories
   const fetchTasks = async () => {
-    const response=await fetch('http://localhost:5000/api/categories');
+    const response=await fetch('http://localhost:5000/api/categories', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt}`}}
+    );
         const body = await response.json();
+        console.log(body)
         setIsLoading(false);
 
     return body
