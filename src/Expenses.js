@@ -8,13 +8,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AddExpense from './components/AddExpense';
 import { ApiContext } from './components/context/ApiContext';
 import Expense from './components/Expense';
+import AddButton from './components/AddButton';
+
 
 const Expenses = () => {
   const [budget, setBudget] = useState(20000);
   // const [isLoading, setIsLoading] = useState(false);
   const [Categories, setCategories] = useState([]);
   const [expenseList, setExpenseList] = useContext(ApiContext);
-
+  const [show, setShow] = useState(false);
 
 
 
@@ -90,6 +92,13 @@ const Expenses = () => {
           setExpenseList(updatedExpenses);
 
     }
+
+    //Toggle show add form
+   
+    const changeShow= ()=>{
+      console.log(!show)
+        setShow(!show)
+    } 
         return (
             < >
 
@@ -107,8 +116,14 @@ const Expenses = () => {
 					</div>
 				</div>
                </div>
+               
+         {show?(
+          <AddExpense submitExpense={adjustEmptyItem} categories={Categories} changeShow={changeShow}/>
+         ):(
+          <AddButton changeShow={changeShow}/>
+         )
+         }
 
-          <AddExpense submitExpense={adjustEmptyItem} categories={Categories}/>
         
            <Expense remove={remove}/>
 

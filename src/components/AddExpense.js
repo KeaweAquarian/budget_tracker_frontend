@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 
-const AddExpense = ({submitExpense, categories}) => {
+const AddExpense = ({submitExpense, categories, changeShow}) => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState({id:101, name:"Travel"});
   const [date, setDate] = useState(new Date());
@@ -48,6 +48,10 @@ const AddExpense = ({submitExpense, categories}) => {
                     </option>
                 )
 
+              const  cancelSelected =(e)=>{
+                  e.preventDefault()
+                  changeShow()
+                }
 
   return (
     <div>
@@ -96,7 +100,7 @@ const AddExpense = ({submitExpense, categories}) => {
                     </div>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}
-                        {/* <Button color="secondary" tag={Link} to="/">Cancel</Button> */}
+                        <Button color="secondary" onClick={cancelSelected}>Cancel</Button>
                     </FormGroup>
                     </Form>
                 </Container>

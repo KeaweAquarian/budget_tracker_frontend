@@ -9,16 +9,18 @@ const appNav = () => {
             <Navbar color="dark" dark  expand="md">
               <NavbarBrand href="/">Project Expense Tracker</NavbarBrand>
                 <Nav className="ml-auto" navbar>
+                    <NavItem>
+                    <NavLink href="/Auth">Auth</NavLink>
+                  </NavItem>
                   <NavItem>
-                    <NavLink href="/">Home Page</NavLink>
+                    <NavLink href="/">Expences</NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink href="/categories">Categories</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/expenses">Expences</NavLink>
+                    <NavLink href="/about">About</NavLink>
                   </NavItem>
-
                 
                 </Nav>
           
