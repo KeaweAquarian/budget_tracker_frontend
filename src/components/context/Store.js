@@ -27,7 +27,6 @@ function Store({ children }) {
     );
         const body = await response.json();
         // setIsLoading(false);
-        console.log(body)
     return body
   }
   return (
