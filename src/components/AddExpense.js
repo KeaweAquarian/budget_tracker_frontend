@@ -119,7 +119,7 @@ const AddExpense = ({ submitExpense, categories, changeShow }) => {
               Save
             </Button>{" "}
             <Button color="secondary" onClick={cancelSelected}>
-              Cancel
+              Close
             </Button>
           </FormGroup>
         </Form>

@@ -1,140 +1,126 @@
-import React, { useEffect } from 'react';
-import AppNav from './appNav';
-import { useState} from 'react';
-import EditCategory from './components/EditCategory';
-import ListGroup from 'react-bootstrap/ListGroup';
-import DeleteButton from './components/DeleteButton';
-import { useLocalState } from './util/useLocalStorage';
-
-
+import React, { useEffect } from "react";
+import AppNav from "./appNav";
+import { useState } from "react";
+import EditCategory from "./components/EditCategory";
+import ListGroup from "react-bootstrap/ListGroup";
+import DeleteButton from "./components/DeleteButton";
+import { useLocalState } from "./util/useLocalStorage";
+import { Container } from "reactstrap";
 
 const Category = () => {
-  
-    const [isLoading, setIsLoading] = useState(true);
-    const [Categories, setCatagories] = useState([]);
-const [jwt, setJwt] = useLocalState("", "jwt");
+  const [isLoading, setIsLoading] = useState(true);
+  const [Categories, setCatagories] = useState([]);
+  const [jwt, setJwt] = useLocalState("", "jwt");
 
-    // const handleSaveClick = (category) => {
-    //     addCatagory(category)
-		
-	// };
+  // const handleSaveClick = (category) => {
+  //     addCatagory(category)
 
-    useEffect(() => {
+  // };
+
+  useEffect(() => {
     const getCategories = async () => {
-      const categoriesFromServer = await fetchTasks()
-      setCatagories(categoriesFromServer)
-    }
+      const categoriesFromServer = await fetchTasks();
+      setCatagories(categoriesFromServer);
+    };
 
-    getCategories()
-  }, [])
+    getCategories();
+  }, []);
 
   // Fetch Catagories
   const fetchTasks = async () => {
-    const response=await fetch('http://localhost:5000/api/categories', {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${jwt}`}}
-    );
-        const body = await response.json();
-        console.log(body)
-        setIsLoading(false);
+    const response = await fetch("http://localhost:5000/api/categories", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+    const body = await response.json();
+    console.log(body);
+    setIsLoading(false);
 
-    return body
-  }
+    return body;
+  };
 
   // Add Catagory
-  const addCatagory = async(category) => {
-  
-    const res = await fetch('http://localhost:5000/api/categories', {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-        },
-        body:JSON.stringify(category),
-        })
-        console.log(res)
-       {const getCategories = async () => {
-      const categoriesFromServer = await fetchTasks()
-      setCatagories(categoriesFromServer)
-    }
+  const addCatagory = async (category) => {
+    const res = await fetch("http://localhost:5000/api/categories", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(category),
+    });
+    console.log(res);
+    {
+      const getCategories = async () => {
+        const categoriesFromServer = await fetchTasks();
+        setCatagories(categoriesFromServer);
+      };
 
-    getCategories()}
+      getCategories();
     }
+  };
 
-      // Delete Catagory
-  const deleteCatagory = async(id) => {
-    
+  // Delete Catagory
+  const deleteCatagory = async (id) => {
     const res = await fetch(`http://localhost:5000/api/categories/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-type': 'application/json',
-        },
-        body:JSON.stringify(id),
-        })
-        if(res.status !== 200){
-            alert("Categories with active expenses cannot be deleted!")
-        }
-
-        {const getCategories = async () => {
-      const categoriesFromServer = await fetchTasks()
-      setCatagories(categoriesFromServer)
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(id),
+    });
+    if (res.status !== 200) {
+      alert("Categories with active expenses cannot be deleted!");
     }
 
-    getCategories()}
-        
+    {
+      const getCategories = async () => {
+        const categoriesFromServer = await fetchTasks();
+        setCatagories(categoriesFromServer);
+      };
+
+      getCategories();
     }
-  
-           
+  };
 
-if(isLoading) 
-            return (
-            <div>
-                <AppNav />
-                Loading...
-                </div>);
-        
-        return ( 
-            
-                <div >
-                   <AppNav />
-                   <div style={{marginLeft:"30px"}}>
-                    <h2>Categories</h2>
-                    
-            <div className='alert alert-secondary p-2 d-flex align-items-center justify-content-between' style={{width:"200px"}}>
+  if (isLoading) return <div>Loading...</div>;
 
-				<EditCategory onAdd={addCatagory}  />
+  return (
+    <Container
+      style={{
+        backgroundColor: "white",
+        boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+        marginRight: "20px",
+      }}
+    >
+      <div style={{ marginLeft: "30px" }}>
+        <h2>Categories</h2>
 
-		</div>
-                    {
-                      Categories.length > 0 ? (
-                     <ListGroup as="ol" style={{"width":'400px'}} >
-                    
-                    {
-                       
-                        Categories.map( category => 
-                            <ListGroup.Item as="li"  key={category.id} >
-                            
-                                {category.name}
-                            <DeleteButton deletecatagory={deleteCatagory} id={category.id}/>    
-                            
-                            </ListGroup.Item>
+        <div
+          className="alert alert-secondary p-2 d-flex align-items-center justify-content-between"
+          style={{ width: "200px" }}
+        >
+          <EditCategory onAdd={addCatagory} />
+        </div>
+        {Categories.length > 0 ? (
+          <ListGroup as="ol" style={{ width: "400px" }}>
+            {Categories.map((category) => (
+              <ListGroup.Item as="li" key={category.id}>
+                {category.name}
+                <DeleteButton
+                  deletecatagory={deleteCatagory}
+                  id={category.id}
+                />
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        ) : (
+          "No categories defined."
+        )}
+      </div>
+    </Container>
+  );
+};
 
-                        )
-                        
-                        }
-                        </ListGroup>
-                      ):(
-                        "No categories defined."
-                      )
-                    }
-
-                   </div>
-
-
-                </div>
-         );
-}
-
-export default Category
-
-
+export default Category;

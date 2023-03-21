@@ -36,7 +36,7 @@ const Expenses = () => {
       },
     });
     const body = await response.json();
-    console.log(body);
+
     // setIsLoading(false);
     return body;
   };
@@ -90,47 +90,52 @@ const Expenses = () => {
     });
 
     let updatedExpenses = expenseList.filter((i) => i.id !== id);
-    console.log(updatedExpenses);
     setExpenseList(updatedExpenses);
   };
 
   //Toggle show add form
 
   const changeShow = () => {
-    console.log(!show);
     setShow(!show);
   };
   return (
     <>
-      <AppNav />
-      <div className="container">
-        <div className="row mt-3">
-          <div className="col-sm">
-            <Budget
-              budget={Math.round(budget * 100) / 100}
-              budgetChange={handleBudget}
-            />
-          </div>
-          <div className="col-sm">
-            <Remaining budget={budget} />
-          </div>
-          <div className="col-sm">
-            <ExpenseTotal />
+      <div
+        className="p-2 flex-fill"
+        style={{
+          backgroundColor: "white",
+          boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+          marginRight: "20px",
+        }}
+      >
+        <div className="container">
+          <div className="row mt-3">
+            <div className="col-sm">
+              <Budget
+                budget={Math.round(budget * 100) / 100}
+                budgetChange={handleBudget}
+              />
+            </div>
+            <div className="col-sm">
+              <Remaining budget={budget} />
+            </div>
+            <div className="col-sm">
+              <ExpenseTotal />
+            </div>
           </div>
         </div>
+
+        {show ? (
+          <AddExpense
+            submitExpense={adjustEmptyItem}
+            categories={Categories}
+            changeShow={changeShow}
+          />
+        ) : (
+          <AddButton changeShow={changeShow} />
+        )}
+        <Expense remove={remove} />
       </div>
-
-      {show ? (
-        <AddExpense
-          submitExpense={adjustEmptyItem}
-          categories={Categories}
-          changeShow={changeShow}
-        />
-      ) : (
-        <AddButton changeShow={changeShow} />
-      )}
-
-      <Expense remove={remove} />
     </>
   );
 };
