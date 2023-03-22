@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Table,
-  Container,
-  Input,
-  Button,
-  Label,
-  FormGroup,
-  Form,
-} from "reactstrap";
+import { Container, Input, Button, Label, FormGroup, Form } from "reactstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -36,9 +28,10 @@ const AddExpense = ({ submitExpense, categories, changeShow }) => {
 
   const findCategoryName = (id) => {
     categories.map((category) => {
-      if (category.id == id) {
+      if (category.id === parseInt(id)) {
         setCategory(category);
       }
+      return null;
     });
   };
 

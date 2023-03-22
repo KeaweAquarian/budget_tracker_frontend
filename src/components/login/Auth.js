@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useLocalState } from "../../util/useLocalStorage";
 
-export default function (props) {
+export default function Auth(props) {
   const [authMode, setAuthMode] = useState("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
-  const [auth, setAuth] = useState(null);
+  // const [auth, setAuth] = useState(null);
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
@@ -44,6 +44,7 @@ export default function (props) {
       } else {
         alert("Invalid email or password");
         // return Promise.reject("Invalid email or password")
+        console.log(jwt);
       }
     };
     login(formBody);
@@ -69,7 +70,7 @@ export default function (props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth}`,
+        // Authorization: `Bearer ${auth}`,
       },
       body: JSON.stringify(user),
     });
@@ -126,9 +127,9 @@ export default function (props) {
                 Submit
               </button>
             </div>
-            <p className="text-center mt-2">
+            {/* <p className="text-center mt-2">
               Forgot <a href="#">password?</a>
-            </p>
+            </p> */}
           </div>
         </form>
       </div>
@@ -207,9 +208,9 @@ export default function (props) {
               Submit
             </button>
           </div>
-          <p className="text-center mt-2">
+          {/* <p className="text-center mt-2">
             Forgot <a href="#">password?</a>
-          </p>
+          </p> */}
         </div>
       </form>
     </div>

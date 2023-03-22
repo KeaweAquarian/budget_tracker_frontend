@@ -10,7 +10,7 @@ import { Container } from "reactstrap";
 const Category = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [Categories, setCatagories] = useState([]);
-  const [jwt, setJwt] = useLocalState("", "jwt");
+  const [jwt] = useLocalState("", "jwt");
 
   // const handleSaveClick = (category) => {
   //     addCatagory(category)
@@ -24,6 +24,7 @@ const Category = () => {
     };
 
     getCategories();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Fetch Catagories
@@ -87,39 +88,45 @@ const Category = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <Container
-      style={{
-        backgroundColor: "white",
-        boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-        marginRight: "20px",
-      }}
+    <div
+      className="d-flex"
+      style={{ backgroundColor: "#EEF5F7", height: "100vh" }}
     >
-      <div style={{ marginLeft: "30px" }}>
-        <h2>Categories</h2>
+      <AppNav />
+      <Container
+        style={{
+          backgroundColor: "white",
+          boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+          marginRight: "20px",
+        }}
+      >
+        <div style={{ marginLeft: "30px" }}>
+          <h2>Categories</h2>
 
-        <div
-          className="alert alert-secondary p-2 d-flex align-items-center justify-content-between"
-          style={{ width: "200px" }}
-        >
-          <EditCategory onAdd={addCatagory} />
+          <div
+            className="alert alert-secondary p-2 d-flex align-items-center justify-content-between"
+            style={{ width: "200px" }}
+          >
+            <EditCategory onAdd={addCatagory} />
+          </div>
+          {Categories.length > 0 ? (
+            <ListGroup as="ol" style={{ width: "400px" }}>
+              {Categories.map((category) => (
+                <ListGroup.Item as="li" key={category.id}>
+                  {category.name}
+                  <DeleteButton
+                    deletecatagory={deleteCatagory}
+                    id={category.id}
+                  />
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          ) : (
+            "No categories defined."
+          )}
         </div>
-        {Categories.length > 0 ? (
-          <ListGroup as="ol" style={{ width: "400px" }}>
-            {Categories.map((category) => (
-              <ListGroup.Item as="li" key={category.id}>
-                {category.name}
-                <DeleteButton
-                  deletecatagory={deleteCatagory}
-                  id={category.id}
-                />
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        ) : (
-          "No categories defined."
-        )}
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 

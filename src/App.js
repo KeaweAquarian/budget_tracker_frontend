@@ -4,46 +4,62 @@ import Category from "./Category";
 import Expenses from "./Expenses";
 import Home from "./home";
 import Auth from "./components/login/Auth";
-import { useEffect, useState } from "react";
-import { useLocalState } from "./util/useLocalStorage";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
-import AppNav from "./appNav";
+import Dashboard from "./components/Dashboard";
 
 function App() {
-  const [jwt, setJwt] = useLocalState("", "jwt");
-  const [active, setActive] = useState("1");
+  // const [active, setActive] = useState("1");
 
-  const toggleLink = (link) => {
-    setActive(link);
-    console.log(link);
-  };
+  // const toggleLink = (link) => {
+  //   setActive(link);
+  //   console.log(link);
+  // };
 
   return (
     <>
-      <div
-        className="d-flex"
-        style={{ backgroundColor: "#EEF5F7", height: "100vh" }}
-      >
-        <AppNav toggleLink={toggleLink} active={active} />
-        <Store>
-          <Router>
-            <Routes>
-              <Route path="/auth" element={<Auth />} />
-              <Route
-                path="/"
-                exact={true}
-                element={
-                  <PrivateRoute>
-                    <Expenses />
-                  </PrivateRoute>
-                }
-              />
-              <Route path="/categories" exact={true} element={<Category />} />
-              <Route path="/about" exact={true} element={<Home />} />
-            </Routes>
-          </Router>
-        </Store>
-      </div>
+      <Store>
+        <Router>
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
+            <Route
+              path="/"
+              exact={true}
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/expenses"
+              exact={true}
+              element={
+                <PrivateRoute>
+                  <Expenses />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/categories"
+              exact={true}
+              element={
+                <PrivateRoute>
+                  <Category />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/about"
+              exact={true}
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </Store>
     </>
   );
 }

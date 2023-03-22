@@ -17,29 +17,29 @@ const Expenses = () => {
   const [Categories, setCategories] = useState([]);
   const [expenseList, setExpenseList] = useContext(ApiContext);
   const [show, setShow] = useState(false);
-  const [jwt, setJwt] = useLocalState("", "jwt");
+  const [jwt] = useLocalState("", "jwt");
 
   useEffect(() => {
     const getCategories = async () => {
+      // Fetch Catagories
+      const fetchCategories = async () => {
+        const response = await fetch("http://localhost:5000/api/categories", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+        const body = await response.json();
+
+        // setIsLoading(false);
+        return body;
+      };
+
       const categoriesFromServer = await fetchCategories();
       setCategories(categoriesFromServer);
     };
     getCategories();
-  }, []);
-
-  // Fetch Catagories
-  const fetchCategories = async () => {
-    const response = await fetch("http://localhost:5000/api/categories", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
-    const body = await response.json();
-
-    // setIsLoading(false);
-    return body;
-  };
+  }, [jwt]);
 
   const handleBudget = (value) => {
     setBudget(value);
@@ -101,40 +101,46 @@ const Expenses = () => {
   return (
     <>
       <div
-        className="p-2 flex-fill"
-        style={{
-          backgroundColor: "white",
-          boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-          marginRight: "20px",
-        }}
+        className="d-flex"
+        style={{ backgroundColor: "#EEF5F7", height: "100vh" }}
       >
-        <div className="container">
-          <div className="row mt-3">
-            <div className="col-sm">
-              <Budget
-                budget={Math.round(budget * 100) / 100}
-                budgetChange={handleBudget}
-              />
-            </div>
-            <div className="col-sm">
-              <Remaining budget={budget} />
-            </div>
-            <div className="col-sm">
-              <ExpenseTotal />
+        <AppNav />
+        <div
+          className="p-2 flex-fill"
+          style={{
+            backgroundColor: "white",
+            boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+            marginRight: "20px",
+          }}
+        >
+          <div className="container">
+            <div className="row mt-3">
+              <div className="col-sm">
+                <Budget
+                  budget={Math.round(budget * 100) / 100}
+                  budgetChange={handleBudget}
+                />
+              </div>
+              <div className="col-sm">
+                <Remaining budget={budget} />
+              </div>
+              <div className="col-sm">
+                <ExpenseTotal />
+              </div>
             </div>
           </div>
-        </div>
 
-        {show ? (
-          <AddExpense
-            submitExpense={adjustEmptyItem}
-            categories={Categories}
-            changeShow={changeShow}
-          />
-        ) : (
-          <AddButton changeShow={changeShow} />
-        )}
-        <Expense remove={remove} />
+          {show ? (
+            <AddExpense
+              submitExpense={adjustEmptyItem}
+              categories={Categories}
+              changeShow={changeShow}
+            />
+          ) : (
+            <AddButton changeShow={changeShow} />
+          )}
+          <Expense remove={remove} />
+        </div>
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { Nav, Navbar, NavItem, NavbarBrand, NavLink } from "reactstrap";
+import { Nav, NavItem, NavbarBrand, NavLink } from "reactstrap";
 import logo from "./images/logo2.png";
 import React from "react";
 
@@ -21,21 +21,27 @@ const appNav = ({ toogleLink, active }) => {
           />
         </NavbarBrand>
         <Nav className="ml-auto" navbar pills></Nav>
-        {/* <NavItem
-          style={{
-            backgroundColor: "#5886F6",
-            borderRadius: "8px",
-          }}
-        >
-          <NavLink href="/Auth" style={{ color: "#383838" }}>
-            Auth
-          </NavLink>
-        </NavItem> */}
         <NavItem>
           <NavLink
             href="/"
             style={
               window.location.href === "http://localhost:3000/"
+                ? {
+                    backgroundColor: "#5886F6",
+                    borderRadius: "8px",
+                    color: "white",
+                  }
+                : { color: "#383838" }
+            }
+          >
+            Dashboard
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            href="/expenses"
+            style={
+              window.location.href === "http://localhost:3000/expenses"
                 ? {
                     backgroundColor: "#5886F6",
                     borderRadius: "8px",
