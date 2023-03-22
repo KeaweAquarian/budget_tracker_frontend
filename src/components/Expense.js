@@ -3,9 +3,18 @@ import { ApiContext } from "./context/ApiContext";
 import Moment from "react-moment";
 import { Table, Container, Button } from "reactstrap";
 
-const Expense = ({ remove }) => {
-  const [expensesList] = useContext(ApiContext);
-  let rows = expensesList.map((expense) => (
+const Expense = ({ remove, chartOption }) => {
+  const [expensesList, setExpenseList] = useContext(ApiContext);
+
+  var list = expensesList;
+  if (chartOption !== "all") {
+    var newExpenseList = expensesList.filter(
+      (e) => e.category.name === chartOption
+    );
+    list = newExpenseList;
+  }
+
+  let rows = list.map((expense) => (
     <tr key={expense.id}>
       <td>{expense.description}</td>
       <td>{expense.location}</td>
@@ -24,7 +33,7 @@ const Expense = ({ remove }) => {
 
   return (
     <Container>
-      <h3>Expense List</h3>
+      <h3>Expenses</h3>
       <Table className="mt-4">
         <thead>
           <tr>

@@ -14,9 +14,10 @@ export default function Auth(props) {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
   };
 
-  const submitData = () => {
+  const submitData = (e) => {
+    e.preventDefault();
     const reqBody = {
-      username: email,
+      username: username,
       password: password,
     };
     var formBody = [];
@@ -95,14 +96,14 @@ export default function Auth(props) {
               </span>
             </div>
             <div className="form-group mt-3">
-              <label>Email address</label>
+              <label>Username</label>
               <input
-                type="email"
+                type="text"
                 className="form-control mt-1"
-                placeholder="Enter email"
-                value={email}
+                placeholder="Enter username"
+                value={username}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setUsername(e.target.value);
                 }}
               />
             </div>
@@ -131,6 +132,13 @@ export default function Auth(props) {
               Forgot <a href="#">password?</a>
             </p> */}
           </div>
+          <h6 style={{ padding: "10px" }}>
+            For demo account enter:
+            <br />
+            username: admin
+            <br />
+            password: admin
+          </h6>
         </form>
       </div>
     );

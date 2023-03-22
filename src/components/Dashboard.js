@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppNav from "../appNav";
 import Chart from "react-apexcharts";
 import { ApiContext } from "./context/ApiContext";
@@ -8,6 +8,7 @@ import Expense from "./Expense";
 
 const Dashboard = () => {
   const [expenseList] = useContext(ApiContext);
+  const [chartOption, setChartOption] = useState("all");
 
   let items = new Map();
 
@@ -29,10 +30,10 @@ const Dashboard = () => {
   let amounts = Array.from(items.values());
 
   return (
-    <>
+    <div style={{ backgroundColor: "#EEF5F7" }}>
       <div
         className="d-flex"
-        style={{ backgroundColor: "#EEF5F7", height: "100vh" }}
+        style={{ backgroundColor: "#EEF5F7", height: "90vh" }}
       >
         <AppNav />
         <Container
@@ -50,6 +51,15 @@ const Dashboard = () => {
               height={450}
               series={amounts}
               options={{
+                chart: {
+                  events: {
+                    dataPointSelection: (event, chartContext, config) => {
+                      setChartOption(
+                        config.w.config.labels[config.dataPointIndex]
+                      );
+                    },
+                  },
+                },
                 labels: category,
                 title: {
                   text: "Current Expenses",
@@ -79,10 +89,18 @@ const Dashboard = () => {
               }}
             />
           </div>
-          <Expense />
         </Container>
       </div>
-    </>
+      <div
+        style={{
+          boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+          margin: "20px",
+          backgroundColor: "white",
+        }}
+      >
+        <Expense chartOption={chartOption} />
+      </div>
+    </div>
   );
 };
 
