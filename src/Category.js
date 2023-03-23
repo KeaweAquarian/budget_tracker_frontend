@@ -6,8 +6,13 @@ import ListGroup from "react-bootstrap/ListGroup";
 import DeleteButton from "./components/DeleteButton";
 import { useLocalState } from "./util/useLocalStorage";
 import { Container } from "reactstrap";
+import AppNavHor from "./components/AppNavHor";
 
 const Category = () => {
+  const [windowDim, setWindowDim] = useState({
+    winWidth: window.innerWidth,
+    winHeight: window.innerHeight,
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [Categories, setCatagories] = useState([]);
   const [jwt] = useLocalState("", "jwt");
@@ -16,6 +21,19 @@ const Category = () => {
   //     addCatagory(category)
 
   // };
+  //handle window resize
+  const detectSize = () => {
+    setWindowDim({
+      winWidth: window.innerWidth,
+      winHeight: window.innerHeight,
+    });
+  };
+  useEffect(() => {
+    window.addEventListener("resize", detectSize);
+    return () => {
+      window.removeEventListener("resize", detectSize);
+    };
+  }, [windowDim]);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -48,6 +66,7 @@ const Category = () => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify(category),
     });
@@ -68,6 +87,7 @@ const Category = () => {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
+        Authorization: `Bearer ${jwt}`,
       },
       body: JSON.stringify(id),
     });
@@ -92,7 +112,8 @@ const Category = () => {
       className="d-flex"
       style={{ backgroundColor: "#EEF5F7", height: "100vh" }}
     >
-      <AppNav />
+      {windowDim.winWidth > 600 && <AppNav />}
+
       <Container
         style={{
           backgroundColor: "white",
@@ -100,6 +121,7 @@ const Category = () => {
           marginRight: "20px",
         }}
       >
+        {windowDim.winWidth < 600 && <AppNavHor />}
         <div style={{ marginLeft: "30px" }}>
           <h2>Categories</h2>
 

@@ -32,9 +32,9 @@ const PrivateRoute = ({ children }) => {
     ) : validTOken === true ? (
       children
     ) : (
-      <Navigate to="auth" />
+      <Navigate to="auth" replace={true} />
     );
-  } else return <Navigate to="auth" />;
+  } else return <Navigate to="auth" replace={true} />;
 };
 
 export default PrivateRoute;

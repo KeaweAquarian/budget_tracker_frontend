@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "reactstrap";
 import { useLocalState } from "../../util/useLocalStorage";
 
 export default function Auth(props) {
@@ -79,6 +80,11 @@ export default function Auth(props) {
     console.log(data);
   };
 
+  const preFill = () => {
+    setUsername("john");
+    setPassword(1234);
+  };
+
   if (authMode === "signin") {
     return (
       <div className="Auth-form-container">
@@ -132,13 +138,10 @@ export default function Auth(props) {
               Forgot <a href="#">password?</a>
             </p> */}
           </div>
-          <h6 style={{ padding: "10px" }}>
-            For demo account enter:
-            <br />
-            username: admin
-            <br />
-            password: admin
-          </h6>
+
+          <Button onClick={preFill} className="mt-3">
+            Demo Account
+          </Button>
         </form>
       </div>
     );

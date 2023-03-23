@@ -1,25 +1,15 @@
 import { Nav, NavItem, NavbarBrand, NavLink, Navbar } from "reactstrap";
-import logo from "./images/logo2.png";
-import React from "react";
+import logo from "../images/logo2.png";
 
-const appNav = ({ toogleLink, active }) => {
+const AppNavHor = () => {
   return (
-    <div
-      style={{
-        padding: "10px",
-        marginRight: "20px",
-        backgroundColor: "white",
-        boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-      }}
-    >
-      <Nav vertical>
-        <NavbarBrand href="/">
-          <img
-            src={logo}
-            alt="Logo"
-            style={{ width: "200px", marginBottom: "10px" }}
-          />
-        </NavbarBrand>
+    <>
+      <Navbar
+        className="my-2"
+        color="dark"
+        dark
+        style={{ borderRadius: "4px" }}
+      >
         <Nav className="ml-auto" navbar pills></Nav>
         <NavItem>
           <NavLink
@@ -27,11 +17,10 @@ const appNav = ({ toogleLink, active }) => {
             style={
               window.location.href === "http://localhost:3000/"
                 ? {
-                    backgroundColor: "#5886F6",
                     borderRadius: "8px",
                     color: "white",
                   }
-                : { color: "#383838" }
+                : { color: "#0249cc" }
             }
           >
             Dashboard
@@ -43,13 +32,11 @@ const appNav = ({ toogleLink, active }) => {
             style={
               window.location.href === "http://localhost:3000/expenses"
                 ? {
-                    backgroundColor: "#5886F6",
                     borderRadius: "8px",
                     color: "white",
                   }
-                : { color: "#383838" }
+                : { color: "#0249cc" }
             }
-            onClick={() => toogleLink(1)}
           >
             Expences
           </NavLink>
@@ -60,13 +47,11 @@ const appNav = ({ toogleLink, active }) => {
             style={
               window.location.href === "http://localhost:3000/categories"
                 ? {
-                    backgroundColor: "#5886F6",
                     borderRadius: "8px",
                     color: "white",
                   }
-                : { color: "#383838" }
+                : { color: "#0249cc" }
             }
-            onClick={() => toogleLink(2)}
           >
             Categories
           </NavLink>
@@ -77,20 +62,18 @@ const appNav = ({ toogleLink, active }) => {
             style={
               window.location.href === "http://localhost:3000/about"
                 ? {
-                    backgroundColor: "#5886F6",
                     borderRadius: "8px",
                     color: "white",
                   }
-                : { color: "#383838" }
+                : { color: "#0249cc" }
             }
-            onClick={() => toogleLink(3)}
           >
             About
           </NavLink>
         </NavItem>
-      </Nav>
-    </div>
+      </Navbar>
+    </>
   );
 };
 
-export default appNav;
+export default AppNavHor;

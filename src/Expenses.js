@@ -10,14 +10,33 @@ import { ApiContext } from "./components/context/ApiContext";
 import Expense from "./components/Expense";
 import AddButton from "./components/AddButton";
 import { useLocalState } from "./util/useLocalStorage";
+import AppNavHor from "./components/AppNavHor";
 
 const Expenses = () => {
+  const [windowDim, setWindowDim] = useState({
+    winWidth: window.innerWidth,
+    winHeight: window.innerHeight,
+  });
   const [budget, setBudget] = useState(20000);
   // const [isLoading, setIsLoading] = useState(false);
   const [Categories, setCategories] = useState([]);
   const [expenseList, setExpenseList] = useContext(ApiContext);
   const [show, setShow] = useState(false);
   const [jwt] = useLocalState("", "jwt");
+
+  //handle window resize
+  const detectSize = () => {
+    setWindowDim({
+      winWidth: window.innerWidth,
+      winHeight: window.innerHeight,
+    });
+  };
+  useEffect(() => {
+    window.addEventListener("resize", detectSize);
+    return () => {
+      window.removeEventListener("resize", detectSize);
+    };
+  }, [windowDim]);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -86,11 +105,13 @@ const Expenses = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
       },
     });
 
     let updatedExpenses = expenseList.filter((i) => i.id !== id);
     setExpenseList(updatedExpenses);
+    console.log(id);
   };
 
   //Toggle show add form
@@ -100,11 +121,13 @@ const Expenses = () => {
   };
   return (
     <>
+      {windowDim.winWidth < 600 && <AppNavHor />}
       <div
         className="d-flex"
         style={{ backgroundColor: "#EEF5F7", height: "100vh" }}
       >
-        <AppNav />
+        {windowDim.winWidth > 600 && <AppNav />}
+
         <div
           className="p-2 flex-fill"
           style={{

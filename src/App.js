@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Store from "./components/context/Store";
 import Category from "./Category";
 import Expenses from "./Expenses";
-import Home from "./home";
+import About from "./About";
 import Auth from "./components/login/Auth";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import Dashboard from "./components/Dashboard";
@@ -53,7 +53,7 @@ function App() {
               exact={true}
               element={
                 <PrivateRoute>
-                  <Home />
+                  <About />
                 </PrivateRoute>
               }
             />
