@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import AppNav from "./appNav";
+import AppNav from "./AppNav";
 import "react-datepicker/dist/react-datepicker.css";
 import Budget from "./components/Budget";
 import Remaining from "./components/Remaining";

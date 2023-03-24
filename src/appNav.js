@@ -1,8 +1,31 @@
 import { Nav, NavItem, NavbarBrand, NavLink, Navbar } from "reactstrap";
 import logo from "./images/logo2.png";
-import React from "react";
+import React, { useState } from "react";
+import jwt_decode from "jwt-decode";
+import { useLocalState } from "./util/useLocalStorage";
 
-const appNav = ({ toogleLink, active }) => {
+const AppNav = () => {
+  const [jwt] = useLocalState("", "jwt");
+  const [username, setUsername] = useState(jwt_decode(jwt).sub);
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+
+  // Fetch user details
+  const fetchUser = async () => {
+    const response = await fetch(`http://localhost:5000/api/user/${username}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+    const body = await response.json();
+    setFirstname(body.firstName);
+    setLastname(body.lastName);
+
+    return body;
+  };
+  fetchUser();
+
   return (
     <div
       style={{
@@ -20,6 +43,14 @@ const appNav = ({ toogleLink, active }) => {
             style={{ width: "200px", marginBottom: "10px" }}
           />
         </NavbarBrand>
+        <div
+          className="mt-5, mb-4"
+          style={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 1px" }}
+        >
+          <h5 className="text-center">
+            {firstname} {lastname}
+          </h5>
+        </div>
         <Nav className="ml-auto" navbar pills></Nav>
         <NavItem>
           <NavLink
@@ -49,7 +80,6 @@ const appNav = ({ toogleLink, active }) => {
                   }
                 : { color: "#383838" }
             }
-            onClick={() => toogleLink(1)}
           >
             Expences
           </NavLink>
@@ -66,7 +96,6 @@ const appNav = ({ toogleLink, active }) => {
                   }
                 : { color: "#383838" }
             }
-            onClick={() => toogleLink(2)}
           >
             Categories
           </NavLink>
@@ -83,7 +112,6 @@ const appNav = ({ toogleLink, active }) => {
                   }
                 : { color: "#383838" }
             }
-            onClick={() => toogleLink(3)}
           >
             About
           </NavLink>
@@ -93,4 +121,4 @@ const appNav = ({ toogleLink, active }) => {
   );
 };
 
-export default appNav;
+export default AppNav;

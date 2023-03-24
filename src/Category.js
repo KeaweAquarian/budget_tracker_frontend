@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import AppNav from "./appNav";
+import AppNav from "./AppNav";
 import { useState } from "react";
 import EditCategory from "./components/EditCategory";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -54,7 +54,6 @@ const Category = () => {
       },
     });
     const body = await response.json();
-    console.log(body);
     setIsLoading(false);
 
     return body;

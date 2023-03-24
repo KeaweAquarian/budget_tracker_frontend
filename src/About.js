@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "reactstrap";
-import AppNav from "./appNav";
+import AppNav from "./AppNav";
 import image from "./images/default.png";
 import AppNavHor from "./components/AppNavHor";
 

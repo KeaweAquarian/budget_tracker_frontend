@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AppNav from "../appNav";
+import AppNav from "../AppNav";
 import Chart from "react-apexcharts";
 import { ApiContext } from "./context/ApiContext";
 import { useContext } from "react";
