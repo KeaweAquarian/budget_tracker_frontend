@@ -8,7 +8,7 @@ import Expense from "./Expense";
 import AppNavHor from "./AppNavHor";
 
 const Dashboard = () => {
-  const [lables, setLables] = useState(true);
+  const [lables, setLables] = useState(false);
   const [expenseList] = useContext(ApiContext);
   const [chartOption, setChartOption] = useState("all");
   const [windowDim, setWindowDim] = useState({
@@ -26,6 +26,10 @@ const Dashboard = () => {
       winHeight: window.innerHeight,
     });
   };
+  useEffect(() => {
+    detectSize();
+  }, []);
+
   useEffect(() => {
     window.addEventListener("resize", detectSize);
     return () => {

@@ -1,12 +1,13 @@
-import { Nav, NavItem, NavbarBrand, NavLink, Navbar } from "reactstrap";
+import { Nav, NavItem, NavbarBrand, NavLink } from "reactstrap";
 import logo from "./images/logo2.png";
 import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useLocalState } from "./util/useLocalStorage";
+import { Button } from "reactstrap";
 
 const AppNav = () => {
-  const [jwt] = useLocalState("", "jwt");
-  const [username, setUsername] = useState(jwt_decode(jwt).sub);
+  const [jwt, setJwt] = useLocalState("", "jwt");
+  const [username] = useState(jwt_decode(jwt).sub);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
 
@@ -25,6 +26,12 @@ const AppNav = () => {
     return body;
   };
   fetchUser();
+
+  const logOut = () => {
+    setJwt("");
+
+    window.location = "http://localhost:3000/auth";
+  };
 
   return (
     <div
@@ -117,6 +124,14 @@ const AppNav = () => {
           </NavLink>
         </NavItem>
       </Nav>
+      <div
+        className="mt-5"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <Button color="secondary" outline onClick={logOut}>
+          Log Out
+        </Button>
+      </div>
     </div>
   );
 };

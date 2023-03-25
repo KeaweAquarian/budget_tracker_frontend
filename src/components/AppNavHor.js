@@ -1,7 +1,14 @@
-import { Nav, NavItem, NavbarBrand, NavLink, Navbar } from "reactstrap";
-import logo from "../images/logo2.png";
+import { Nav, NavItem, NavLink, Navbar } from "reactstrap";
+import { Button } from "reactstrap";
+import { useLocalState } from "../util/useLocalStorage";
 
 const AppNavHor = () => {
+  const [, setJwt] = useLocalState("", "jwt");
+  const logOut = () => {
+    setJwt("");
+
+    window.location = "http://localhost:3000/auth";
+  };
   return (
     <>
       <Navbar
@@ -71,6 +78,9 @@ const AppNavHor = () => {
             About
           </NavLink>
         </NavItem>
+        <Button size="sm" color="secondary" outline onClick={logOut}>
+          Log Out
+        </Button>
       </Navbar>
     </>
   );

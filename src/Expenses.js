@@ -162,7 +162,7 @@ const Expenses = () => {
           ) : (
             <AddButton changeShow={changeShow} />
           )}
-          <Expense remove={remove} chartOption={"all"} />
+          <Expense remove={remove} chartOption={"all"} number={4} />
         </div>
       </div>
     </>
