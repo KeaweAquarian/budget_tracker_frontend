@@ -1,6 +1,6 @@
 import { Nav, NavItem, NavbarBrand, NavLink } from "reactstrap";
 import logo from "./images/logo2.png";
-import img from "./images/me.jpg";
+import img from "./images/userIcon2.png";
 import React, { useState, useCallback, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useLocalState } from "./util/useLocalStorage";
@@ -25,19 +25,18 @@ const AppNav = () => {
       },
     });
     const body = await response.json();
-
+    setProfileImage(body.userProfileImageLink);
     setFirstname(body.firstName);
     setLastname(body.lastName);
     setId(body.id);
-    setProfileImage(body.userProfileImageLink);
+
     setLoading(false);
-    console.log(jwt);
 
     return body;
   };
   useEffect(() => {
     fetchUser();
-  });
+  }, []);
 
   const logOut = () => {
     setJwt("");
@@ -45,13 +44,16 @@ const AppNav = () => {
     window.location = "http://localhost:3000/auth";
   };
 
-  // if (loading) return <div>Loading...</div>;
+  const render = () => {
+    window.location.reload();
+  };
 
   return (
     <div
       style={{
         padding: "10px",
         marginRight: "20px",
+        marginLeft: "20px",
         backgroundColor: "white",
         boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
       }}
@@ -66,24 +68,10 @@ const AppNav = () => {
         </NavbarBrand>
 
         <div style={{ display: "flex", justifyContent: "center" }}>
-          {!loading ? <MyDropzone id={id} jwt={jwt} /> : ""}
+          {!loading ? <MyDropzone id={id} jwt={jwt} render={render} /> : ""}
         </div>
 
-        {profileImage !== null ? (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <img
-              src={`http://localhost:5000/api/user/${id}/image/download`}
-              alt="Logo"
-              style={{
-                borderRadius: "50%",
-                width: "150px",
-                height: "150px",
-                marginBottom: "10px",
-                objectFit: "cover",
-              }}
-            />
-          </div>
-        ) : null}
+        <Finished loading={loading} profileImage={profileImage} id={id} />
 
         <div
           className="mt-5, mb-4"
@@ -171,35 +159,86 @@ const AppNav = () => {
   );
 };
 
-const drop = () => {};
-const MyDropzone = ({ id, jwt }) => {
+const Finished = ({ loading, profileImage, id }) => {
+  let value = 0;
+  if (profileImage !== null) {
+    value = 1;
+  } else {
+    value = 2;
+  }
+  if (!loading) {
+    switch (value) {
+      case 1:
+        return (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              src={`http://localhost:5000/api/user/${id}/image/download`}
+              alt="Logo"
+              style={{
+                borderRadius: "50%",
+                width: "150px",
+                height: "150px",
+                marginBottom: "10px",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        );
+      case 2:
+        return (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              src={img}
+              alt="Logo"
+              style={{
+                borderRadius: "50%",
+                width: "150px",
+                height: "150px",
+                marginBottom: "10px",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  } else return null;
+};
+
+const MyDropzone = ({ id, jwt, render }) => {
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     const formData = new FormData();
     formData.append("file", file);
     const userId = id;
-    const res = fetch(
-      `http://localhost:5000/api/user/${userId}/image/upload`,
+    const fetchImage = async () => {
+      const res = await fetch(
+        `http://localhost:5000/api/user/${userId}/image/upload`,
 
-      {
-        method: "POST",
-        RequestMode: "no-cors",
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-        body: formData,
-      }
-    );
+        {
+          method: "POST",
+          RequestMode: "no-cors",
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+          body: formData,
+        }
+      );
+      await render();
+    };
+    fetchImage();
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div {...getRootProps()}>
+    <div {...getRootProps()} style={{ cursor: "pointer" }}>
       <input {...getInputProps()} />
       {isDragActive ? (
-        <p>Drop the image here ...</p>
+        <h6>Drop the image here ...</h6>
       ) : (
-        <p>Drag 'n' drop profile image here, or click to select image</p>
+        <h6>Edit profile image</h6>
       )}
     </div>
   );
