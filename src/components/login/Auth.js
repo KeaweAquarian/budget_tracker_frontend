@@ -77,7 +77,6 @@ export default function Auth(props) {
       body: JSON.stringify(user),
     });
     const data = await res.json();
-    console.log(data);
   };
 
   const preFill = () => {
