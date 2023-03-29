@@ -7,7 +7,7 @@ const AppNavHor = () => {
   const logOut = () => {
     setJwt("");
 
-    window.location.href === "http://localhost:3000/auth";
+    window.location.reload();
   };
   return (
     <>
