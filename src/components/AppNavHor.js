@@ -7,7 +7,8 @@ const AppNavHor = () => {
   const logOut = () => {
     setJwt("");
 
-    window.location = "http://localhost:3000/auth";
+    window.location =
+      "https://expensetracker-production-2788.up.railway.app/auth";
   };
   return (
     <>
