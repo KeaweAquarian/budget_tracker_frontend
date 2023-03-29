@@ -7,8 +7,7 @@ const AppNavHor = () => {
   const logOut = () => {
     setJwt("");
 
-    window.location =
-      "https://expensetracker-production-2788.up.railway.app/auth";
+    window.location = "https://budget-tracker-frontend-tau.vercel.app/auth";
   };
   return (
     <>
