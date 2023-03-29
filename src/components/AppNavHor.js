@@ -7,7 +7,7 @@ const AppNavHor = () => {
   const logOut = () => {
     setJwt("");
 
-    window.location = "https://budget-tracker-frontend-tau.vercel.app/auth";
+    window.location.href === "http://localhost:3000/auth";
   };
   return (
     <>
