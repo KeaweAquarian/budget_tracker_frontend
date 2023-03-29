@@ -35,9 +35,18 @@ const PrivateRoute = ({ children }) => {
     ) : validTOken === true ? (
       children
     ) : (
-      <Navigate to="/auth" replace={true} />
+      <Navigate
+        to="https://budget-tracker-frontend-tau.vercel.app/auth"
+        replace={true}
+      />
     );
-  } else return <Navigate to="/auth" replace={true} />;
+  } else
+    return (
+      <Navigate
+        to="https://budget-tracker-frontend-tau.vercel.app/auth"
+        replace={true}
+      />
+    );
 };
 
 export default PrivateRoute;
