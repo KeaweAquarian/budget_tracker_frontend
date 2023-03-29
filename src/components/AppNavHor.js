@@ -4,10 +4,11 @@ import { useLocalState } from "../util/useLocalStorage";
 
 const AppNavHor = () => {
   const [, setJwt] = useLocalState("", "jwt");
+
   const logOut = () => {
     setJwt("");
 
-    window.location.reload();
+    window.location = "/auth";
   };
   return (
     <>

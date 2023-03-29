@@ -103,26 +103,6 @@ const Expenses = () => {
     setExpenseList([...expenseList, data]);
   };
 
-  //Delete Expense
-  const remove = async (id) => {
-    await fetch(
-      `https://expensetracker-production-2788.up.railway.app/expenses/${id}`,
-      {
-        method: "DELETE",
-        RequestMode: "no-cors",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
-        },
-      }
-    );
-
-    let updatedExpenses = expenseList.filter((i) => i.id !== id);
-    setExpenseList(updatedExpenses);
-    console.log(id);
-  };
-
   //Toggle show add form
 
   const changeShow = () => {
@@ -171,7 +151,7 @@ const Expenses = () => {
           ) : (
             <AddButton changeShow={changeShow} />
           )}
-          <Expense remove={remove} chartOption={"all"} number={4} />
+          <Expense chartOption={"all"} />
         </div>
       </div>
     </>

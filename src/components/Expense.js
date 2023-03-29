@@ -2,10 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { ApiContext } from "./context/ApiContext";
 import Moment from "react-moment";
 import { Table, Container, Button } from "reactstrap";
+import { useLocalState } from "../util/useLocalStorage";
 
-const Expense = ({ remove, chartOption, number }) => {
-  const [expensesList] = useContext(ApiContext);
-
+const Expense = ({ chartOption }) => {
+  const [expenseList, setExpenseList] = useContext(ApiContext);
+  const [jwt] = useLocalState("", "jwt");
   const [windowDim, setWindowDim] = useState({
     winWidth: window.innerWidth,
     winHeight: window.innerHeight,
@@ -25,9 +26,32 @@ const Expense = ({ remove, chartOption, number }) => {
     };
   }, [windowDim]);
 
-  var list = expensesList;
+  //Delete Expense
+  const remove = async (id) => {
+    console.log(id);
+    console.log(jwt);
+    const res = await fetch(
+      `https://expensetracker-production-2788.up.railway.app/api/expenses/${id}`,
+      {
+        method: "DELETE",
+        RequestMode: "no-cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+    console.log(res);
+
+    let updatedExpenses = expenseList.filter((i) => i.id !== id);
+    setExpenseList(updatedExpenses);
+    console.log(id);
+  };
+
+  var list = expenseList;
   if (chartOption !== "all") {
-    var newExpenseList = expensesList.filter(
+    var newExpenseList = expenseList.filter(
       (e) => e.category.name === chartOption
     );
     list = newExpenseList;

@@ -9,7 +9,9 @@ import { useDropzone } from "react-dropzone";
 
 const AppNav = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
-  const [username] = useState(jwt_decode(jwt).sub);
+  const [username] = useState((data) =>
+    data !== null ? jwt_decode(jwt).sub : ""
+  );
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,7 @@ const AppNav = () => {
 
   // Fetch user details
   const fetchUser = async () => {
+    console.log("username is" + username);
     const response = await fetch(
       `https://expensetracker-production-2788.up.railway.app/api/user/${username}`,
       {
@@ -27,25 +30,26 @@ const AppNav = () => {
         },
       }
     );
-    const body = await response.json();
-    setProfileImage(body.userProfileImageLink);
-    setFirstname(body.firstName);
-    setLastname(body.lastName);
-    setId(body.id);
-
-    setLoading(false);
-
-    return body;
+    if (response.status === 200) {
+      const body = await response.json();
+      setProfileImage(body.userProfileImageLink);
+      setFirstname(body.firstName);
+      setLastname(body.lastName);
+      setId(body.id);
+      setLoading(false);
+      return body;
+    }
   };
   useEffect(() => {
     fetchUser();
+
     // eslint-disable-next-line
   }, []);
 
   const logOut = () => {
     setJwt("");
 
-    window.location.reload();
+    window.location = "/auth";
   };
 
   const render = () => {

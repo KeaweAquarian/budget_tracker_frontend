@@ -111,7 +111,13 @@ const Dashboard = () => {
                         total: {
                           show: lables,
                           showAlways: true,
-                          // formatter: () => "643",
+                          formatter: function (w) {
+                            let result = w.globals.seriesTotals.reduce(
+                              (a, b) => a + b,
+                              0
+                            );
+                            return Math.round(result * 100) / 100; // * 100 for 2 decimal numbers
+                          },
                           fontSize: 30,
                           color: "#f90000",
                         },

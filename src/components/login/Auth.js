@@ -6,7 +6,8 @@ export default function Auth(props) {
   const [authMode, setAuthMode] = useState("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [jwt, setJwt] = useLocalState("", "jwt");
   // const [auth, setAuth] = useState(null);
@@ -31,6 +32,7 @@ export default function Auth(props) {
 
     //Get login token
     const login = async (formBody) => {
+      console.log(formBody);
       const res = await fetch(
         "https://expensetracker-production-2788.up.railway.app/api/login",
         {
@@ -41,6 +43,7 @@ export default function Auth(props) {
           body: formBody,
         }
       );
+      console.log(res);
 
       if (res.status === 200) {
         const data = await res.json();
@@ -58,10 +61,12 @@ export default function Auth(props) {
   const submitUser = (e) => {
     e.preventDefault();
     const user = {
-      name: name,
+      firstName: firstName,
+      lastName: lastName,
       userName: username,
       email: email,
       password: password,
+      userProfileImageLink: null,
       roles: [{ id: 1, name: "ROLE_USER" }],
     };
     submittingUser(user);
@@ -69,7 +74,8 @@ export default function Auth(props) {
 
   //Add user
   const submittingUser = async (user) => {
-    await fetch(
+    console.log(user);
+    const res = await fetch(
       `https://expensetracker-production-2788.up.railway.app/api/user/add`,
       {
         method: "POST",
@@ -82,6 +88,7 @@ export default function Auth(props) {
         body: JSON.stringify(user),
       }
     );
+    console.log(res);
   };
 
   const preFill = () => {
@@ -95,7 +102,7 @@ export default function Auth(props) {
         <form className="Auth-form">
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Budget Tracker Sign In</h3>
-            <div className="text-center">
+            {/* <div className="text-center">
               Not registered yet?{" "}
               <span
                 className="link-primary"
@@ -104,7 +111,7 @@ export default function Auth(props) {
               >
                 Sign Up
               </span>
-            </div>
+            </div> */}
             <div className="form-group mt-3">
               <label>Username</label>
               <input
@@ -143,7 +150,7 @@ export default function Auth(props) {
             </p> */}
           </div>
 
-          <Button onClick={preFill} className="mt-3">
+          <Button onClick={preFill} className="m-3">
             Demo Account
           </Button>
         </form>
@@ -167,14 +174,26 @@ export default function Auth(props) {
             </span>
           </div>
           <div className="form-group mt-3">
-            <label>Name</label>
+            <label>First Name</label>
             <input
               type="text"
               className="form-control mt-1"
-              placeholder="e.g Jane Williams"
-              value={name}
+              placeholder="e.g Jane"
+              value={firstName}
               onChange={(e) => {
-                setName(e.target.value);
+                setFirstName(e.target.value);
+              }}
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Last Name</label>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="e.g Williams"
+              value={lastName}
+              onChange={(e) => {
+                setLastName(e.target.value);
               }}
             />
           </div>
