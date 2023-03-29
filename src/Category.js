@@ -47,12 +47,15 @@ const Category = () => {
 
   // Fetch Catagories
   const fetchTasks = async () => {
-    const response = await fetch("http://localhost:5000/api/categories", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
+    const response = await fetch(
+      "https://expensetracker-production-2788.up.railway.app/api/categories",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
     const body = await response.json();
     setIsLoading(false);
 
@@ -61,14 +64,17 @@ const Category = () => {
 
   // Add Catagory
   const addCatagory = async (category) => {
-    const res = await fetch("http://localhost:5000/api/categories", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-      body: JSON.stringify(category),
-    });
+    const res = await fetch(
+      "https://expensetracker-production-2788.up.railway.app/api/categories",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify(category),
+      }
+    );
     console.log(res);
     {
       const getCategories = async () => {
@@ -82,14 +88,17 @@ const Category = () => {
 
   // Delete Catagory
   const deleteCatagory = async (id) => {
-    const res = await fetch(`http://localhost:5000/api/categories/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-      body: JSON.stringify(id),
-    });
+    const res = await fetch(
+      `https://expensetracker-production-2788.up.railway.app/api/categories/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify(id),
+      }
+    );
     if (res.status !== 200) {
       alert("Categories with active expenses cannot be deleted!");
     }

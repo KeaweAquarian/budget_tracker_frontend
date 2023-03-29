@@ -42,12 +42,15 @@ const Expenses = () => {
     const getCategories = async () => {
       // Fetch Catagories
       const fetchCategories = async () => {
-        const response = await fetch("http://localhost:5000/api/categories", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
+        const response = await fetch(
+          "https://expensetracker-production-2788.up.railway.app/api/categories",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
         const body = await response.json();
 
         // setIsLoading(false);
@@ -83,31 +86,37 @@ const Expenses = () => {
 
   //Add expense
   const submitExpense = async (item) => {
-    const res = await fetch(`http://localhost:5000/api/expenses`, {
-      method: "POST",
-      RequestMode: "no-cors",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-      body: JSON.stringify(item),
-    });
+    const res = await fetch(
+      `https://expensetracker-production-2788.up.railway.app/api/expenses`,
+      {
+        method: "POST",
+        RequestMode: "no-cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify(item),
+      }
+    );
     const data = await res.json();
     setExpenseList([...expenseList, data]);
   };
 
   //Delete Expense
   const remove = async (id) => {
-    await fetch(`http://localhost:5000/api/expenses/${id}`, {
-      method: "DELETE",
-      RequestMode: "no-cors",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
+    await fetch(
+      `https://expensetracker-production-2788.up.railway.app/expenses/${id}`,
+      {
+        method: "DELETE",
+        RequestMode: "no-cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
 
     let updatedExpenses = expenseList.filter((i) => i.id !== id);
     setExpenseList(updatedExpenses);

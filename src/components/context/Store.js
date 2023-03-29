@@ -15,12 +15,15 @@ function Store({ children }) {
 
     // Fetch Expenses
     const fetchExpenses = async () => {
-      const response = await fetch("http://localhost:5000/api/expenses", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
+      const response = await fetch(
+        "https://expensetracker-production-2788.up.railway.app/api/expenses",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
       const body = await response.json();
 
       // setIsLoading(false);

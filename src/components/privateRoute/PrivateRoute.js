@@ -9,12 +9,15 @@ const PrivateRoute = ({ children }) => {
   if (jwt) {
     // Fetch Catagories
     const fetchTasks = async () => {
-      const res = await fetch("http://localhost:5000/api/categories", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
+      const res = await fetch(
+        "https://expensetracker-production-2788.up.railway.app/api/categories",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
       if (res.status === 200) {
         setValidToken(true);
         setLoading(false);

@@ -31,13 +31,16 @@ export default function Auth(props) {
 
     //Get login token
     const login = async (formBody) => {
-      const res = await fetch("http://localhost:5000/api/login", {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        method: "POST",
-        body: formBody,
-      });
+      const res = await fetch(
+        "https://expensetracker-production-2788.up.railway.app/api/login",
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          method: "POST",
+          body: formBody,
+        }
+      );
 
       if (res.status === 200) {
         const data = await res.json();
@@ -66,16 +69,19 @@ export default function Auth(props) {
 
   //Add user
   const submittingUser = async (user) => {
-    const res = await fetch(`http://localhost:5000/api/user/add`, {
-      method: "POST",
-      RequestMode: "no-cors",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth}`,
-      },
-      body: JSON.stringify(user),
-    });
+    const res = await fetch(
+      `https://expensetracker-production-2788.up.railway.app/api/user/add`,
+      {
+        method: "POST",
+        RequestMode: "no-cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${auth}`,
+        },
+        body: JSON.stringify(user),
+      }
+    );
     const data = await res.json();
   };
 

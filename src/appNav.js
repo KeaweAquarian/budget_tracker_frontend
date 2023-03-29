@@ -18,12 +18,15 @@ const AppNav = () => {
 
   // Fetch user details
   const fetchUser = async () => {
-    const response = await fetch(`http://localhost:5000/api/user/${username}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
+    const response = await fetch(
+      `https://expensetracker-production-2788.up.railway.app/api/user/${username}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
     const body = await response.json();
     setProfileImage(body.userProfileImageLink);
     setFirstname(body.firstName);
@@ -172,7 +175,7 @@ const Finished = ({ loading, profileImage, id }) => {
         return (
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
-              src={`http://localhost:5000/api/user/${id}/image/download`}
+              src={`https://expensetracker-production-2788.up.railway.app/api/user/${id}/image/download`}
               alt="Logo"
               style={{
                 borderRadius: "50%",
@@ -215,7 +218,7 @@ const MyDropzone = ({ id, jwt, render }) => {
     const userId = id;
     const fetchImage = async () => {
       const res = await fetch(
-        `http://localhost:5000/api/user/${userId}/image/upload`,
+        `https://expensetracker-production-2788.up.railway.app/api/user/${userId}/image/upload`,
 
         {
           method: "POST",
