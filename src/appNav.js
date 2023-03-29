@@ -5,7 +5,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useLocalState } from "./util/useLocalStorage";
 import { Button } from "reactstrap";
-import Dropzone, { useDropzone } from "react-dropzone";
+import { useDropzone } from "react-dropzone";
 
 const AppNav = () => {
   const [jwt, setJwt] = useLocalState("", "jwt");
@@ -39,6 +39,7 @@ const AppNav = () => {
   };
   useEffect(() => {
     fetchUser();
+    // eslint-disable-next-line
   }, []);
 
   const logOut = () => {
@@ -217,7 +218,7 @@ const MyDropzone = ({ id, jwt, render }) => {
     formData.append("file", file);
     const userId = id;
     const fetchImage = async () => {
-      const res = await fetch(
+      await fetch(
         `https://expensetracker-production-2788.up.railway.app/api/user/${userId}/image/upload`,
 
         {
@@ -231,7 +232,9 @@ const MyDropzone = ({ id, jwt, render }) => {
       );
       await render();
     };
+
     fetchImage();
+    // eslint-disable-next-line
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

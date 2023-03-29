@@ -69,7 +69,7 @@ export default function Auth(props) {
 
   //Add user
   const submittingUser = async (user) => {
-    const res = await fetch(
+    await fetch(
       `https://expensetracker-production-2788.up.railway.app/api/user/add`,
       {
         method: "POST",
@@ -82,7 +82,6 @@ export default function Auth(props) {
         body: JSON.stringify(user),
       }
     );
-    const data = await res.json();
   };
 
   const preFill = () => {
