@@ -45,7 +45,7 @@ const AppNav = () => {
   const logOut = () => {
     setJwt("");
 
-    window.location = "http://localhost:3000/auth";
+    window.location.reload();
   };
 
   const render = () => {
