@@ -4,7 +4,7 @@ import { useLocalState } from "../../util/useLocalStorage";
 
 export default function Auth(props) {
   const [authMode, setAuthMode] = useState("signin");
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -64,7 +64,7 @@ export default function Auth(props) {
       firstName: firstName,
       lastName: lastName,
       userName: username,
-      email: email,
+      // email: email,
       password: password,
       userProfileImageLink: null,
       roles: [{ id: 1, name: "ROLE_USER" }],
@@ -74,7 +74,6 @@ export default function Auth(props) {
 
   //Add user
   const submittingUser = async (user) => {
-    console.log(user);
     const res = await fetch(
       `https://expensetracker-production-2788.up.railway.app/api/user/add`,
       {
@@ -88,7 +87,14 @@ export default function Auth(props) {
         body: JSON.stringify(user),
       }
     );
-    console.log(res);
+    console.log(res.status);
+    if (res.status === 200 || res.status === 201) {
+      changeAuthMode();
+    } else {
+      alert(
+        "Username is already associated with an account. Please choose another."
+      );
+    }
   };
 
   const preFill = () => {
@@ -102,7 +108,7 @@ export default function Auth(props) {
         <form className="Auth-form">
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Budget Tracker Sign In</h3>
-            {/* <div className="text-center">
+            <div className="text-center">
               Not registered yet?{" "}
               <span
                 className="link-primary"
@@ -111,7 +117,7 @@ export default function Auth(props) {
               >
                 Sign Up
               </span>
-            </div> */}
+            </div>
             <div className="form-group mt-3">
               <label>Username</label>
               <input
@@ -209,7 +215,7 @@ export default function Auth(props) {
               }}
             />
           </div>
-          <div className="form-group mt-3">
+          {/* <div className="form-group mt-3">
             <label>Email address</label>
             <input
               type="email"
@@ -220,7 +226,7 @@ export default function Auth(props) {
                 setEmail(e.target.value);
               }}
             />
-          </div>
+          </div> */}
           <div className="form-group mt-3">
             <label>Password</label>
             <input
