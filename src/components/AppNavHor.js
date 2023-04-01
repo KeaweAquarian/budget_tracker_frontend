@@ -19,7 +19,7 @@ const AppNavHor = () => {
         style={{ borderRadius: "4px" }}
       >
         <Nav className="ml-auto" navbar pills></Nav>
-        <NavItem>
+        <NavItem style={{ fontSize: "10px" }}>
           <NavLink
             href="/"
             style={
@@ -34,7 +34,7 @@ const AppNavHor = () => {
             Dashboard
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem style={{ fontSize: "10px" }}>
           <NavLink
             href="/expenses"
             style={
@@ -49,7 +49,7 @@ const AppNavHor = () => {
             Expences
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem style={{ fontSize: "10px" }}>
           <NavLink
             href="/categories"
             style={
@@ -64,7 +64,7 @@ const AppNavHor = () => {
             Categories
           </NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem style={{ fontSize: "10px" }}>
           <NavLink
             href="/about"
             style={
@@ -79,7 +79,13 @@ const AppNavHor = () => {
             About
           </NavLink>
         </NavItem>
-        <Button size="sm" color="secondary" outline onClick={logOut}>
+        <Button
+          size="sm"
+          color="secondary"
+          outline
+          onClick={logOut}
+          style={{ fontSize: "10px" }}
+        >
           Log Out
         </Button>
       </Navbar>

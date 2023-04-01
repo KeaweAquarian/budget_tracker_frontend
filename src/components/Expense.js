@@ -66,8 +66,7 @@ const Expense = ({ chartOption }) => {
           <Moment date={expense.expensedate} format="YYYY/MM/DD" />
         </td>
       )}
-
-      <td>{expense.category.name}</td>
+      {windowDim.winWidth > 500 && <td>{expense.category.name}</td>}
       <td>{expense.amount}</td>
       <td>
         <Button size="sm" color="danger" onClick={() => remove(expense.id)}>
@@ -86,8 +85,7 @@ const Expense = ({ chartOption }) => {
             <th width="30%">Description</th>
             {windowDim.winWidth > 700 && <th width="10%">Location</th>}
             {windowDim.winWidth > 700 && <th> Date</th>}
-
-            <th> Category</th>
+            {windowDim.winWidth > 500 && <th> Category</th>}
             <th>Amount</th>
             <th width="10%">Action</th>
           </tr>

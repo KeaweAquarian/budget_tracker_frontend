@@ -112,13 +112,22 @@ const Category = () => {
       getCategories();
     }
   };
+  let size = "400px";
+  let fontSize = "18px";
+  {
+    window.innerWidth < 600 && (size = "100%");
+  }
+
+  {
+    window.innerWidth < 600 && (fontSize = "12px");
+  }
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <div
       className="d-flex"
-      style={{ backgroundColor: "#EEF5F7", height: "100vh" }}
+      style={{ backgroundColor: "#EEF5F7", height: "100%" }}
     >
       {windowDim.winWidth > 600 && <AppNav />}
 
@@ -140,7 +149,7 @@ const Category = () => {
             <EditCategory onAdd={addCatagory} />
           </div>
           {Categories.length > 0 ? (
-            <ListGroup as="ol" style={{ width: "400px" }}>
+            <ListGroup as="ol" style={{ width: size, fontSize: fontSize }}>
               {Categories.map((category) => (
                 <ListGroup.Item as="li" key={category.id}>
                   {category.name}

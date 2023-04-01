@@ -77,17 +77,25 @@ const Dashboard = () => {
         >
           <div
             className="container-fluid mt-3 mb-3"
-            style={{ maxWidth: 800, maxHeight: 800 }}
+            style={{
+              maxWidth: 800,
+              maxHeight: 800,
+              // minWidth: 300,
+              minHeight: 200,
+            }}
           >
             <h2 className="text-left">Project Expenses</h2>
             <Chart
               // width={windowDim.winWidth * 0.6}
               // height={windowDim.winWidth * 0.6}
               // maxHeight={600}
-              // maxWidth={600}
+              // minWidth={600}
               type="donut"
               series={amounts}
               options={{
+                // minWidth: 400,
+                // minHeight: 400,
+
                 chart: {
                   events: {
                     dataPointSelection: (event, chartContext, config) => {
