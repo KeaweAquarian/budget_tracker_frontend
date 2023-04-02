@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
 import { useLocalState } from "../../util/useLocalStorage";
+import img from "../../images/default.png";
 
 export default function Auth(props) {
   const [authMode, setAuthMode] = useState("signin");
@@ -104,63 +105,66 @@ export default function Auth(props) {
 
   if (authMode === "signin") {
     return (
-      <div className="Auth-form-container">
-        <form className="Auth-form">
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Budget Tracker Sign In</h3>
-            <div className="text-center">
-              Not registered yet?{" "}
-              <span
-                className="link-primary"
-                onClick={changeAuthMode}
-                role="button"
-              >
-                Sign Up
-              </span>
-            </div>
-            <div className="form-group mt-3">
-              <label>Username</label>
-              <input
-                type="text"
-                className="form-control mt-1"
-                placeholder="Enter username"
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label>Password</label>
-              <input
-                type="password"
-                className="form-control mt-1"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="d-grid gap-2 mt-3">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={submitData}
-              >
-                Submit
-              </button>
-            </div>
-            {/* <p className="text-center mt-2">
+      <>
+        <div className="Auth-form-container">
+          <form className="Auth-form">
+            <div className="Auth-form-content">
+              <img src={img} alt="Logo" style={{ maxWidth: "100%" }} />
+              {/* <h3 className="Auth-form-title">Budget Tracker Sign In</h3> */}
+              <div className="text-center">
+                Not registered yet?{" "}
+                <span
+                  className="link-primary"
+                  onClick={changeAuthMode}
+                  role="button"
+                >
+                  Sign Up
+                </span>
+              </div>
+              <div className="form-group mt-3">
+                <label>Username</label>
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter username"
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control mt-1"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="d-grid gap-2 mt-3">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={submitData}
+                >
+                  Submit
+                </button>
+              </div>
+              {/* <p className="text-center mt-2">
               Forgot <a href="#">password?</a>
             </p> */}
-          </div>
+            </div>
 
-          <Button onClick={preFill} className="m-3">
-            Demo Account
-          </Button>
-        </form>
-      </div>
+            <Button onClick={preFill} className="m-3">
+              Demo Account
+            </Button>
+          </form>
+        </div>
+      </>
     );
   }
 

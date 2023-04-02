@@ -133,6 +133,9 @@ const Dashboard = () => {
                     },
                   },
                 },
+                legend: {
+                  show: lables,
+                },
 
                 dataLabels: {
                   enabled: lables,

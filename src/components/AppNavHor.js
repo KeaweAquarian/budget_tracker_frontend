@@ -12,14 +12,9 @@ const AppNavHor = () => {
   };
   return (
     <>
-      <Navbar
-        className="my-2"
-        color="dark"
-        dark
-        style={{ borderRadius: "4px" }}
-      >
+      <Navbar color="dark" dark style={{ borderRadius: "4px" }}>
         <Nav className="ml-auto" navbar pills></Nav>
-        <NavItem style={{ fontSize: "10px" }}>
+        <NavItem style={{ fontSize: "12px" }}>
           <NavLink
             href="/"
             style={
@@ -34,7 +29,7 @@ const AppNavHor = () => {
             Dashboard
           </NavLink>
         </NavItem>
-        <NavItem style={{ fontSize: "10px" }}>
+        <NavItem style={{ fontSize: "12px" }}>
           <NavLink
             href="/expenses"
             style={
@@ -49,7 +44,7 @@ const AppNavHor = () => {
             Expences
           </NavLink>
         </NavItem>
-        <NavItem style={{ fontSize: "10px" }}>
+        <NavItem style={{ fontSize: "12px" }}>
           <NavLink
             href="/categories"
             style={
@@ -64,7 +59,7 @@ const AppNavHor = () => {
             Categories
           </NavLink>
         </NavItem>
-        <NavItem style={{ fontSize: "10px" }}>
+        <NavItem style={{ fontSize: "12px" }}>
           <NavLink
             href="/about"
             style={
