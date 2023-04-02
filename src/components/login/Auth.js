@@ -13,10 +13,12 @@ export default function Auth(props) {
   const [jwt, setJwt] = useLocalState("", "jwt");
   // const [auth, setAuth] = useState(null);
 
+  //Swich from signin to signup
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
   };
 
+  //Signin
   const submitData = (e) => {
     e.preventDefault();
     const reqBody = {
@@ -59,18 +61,41 @@ export default function Auth(props) {
     login(formBody);
   };
 
+  //add user
   const submitUser = (e) => {
     e.preventDefault();
-    const user = {
-      firstName: firstName,
-      lastName: lastName,
-      userName: username,
-      // email: email,
-      password: password,
-      userProfileImageLink: null,
-      roles: [{ id: 1, name: "ROLE_USER" }],
-    };
-    submittingUser(user);
+    if (validateForm()) {
+      const user = {
+        firstName: firstName,
+        lastName: lastName,
+        userName: username,
+        // email: email,
+        password: password,
+        userProfileImageLink: null,
+        roles: [{ id: 1, name: "ROLE_USER" }],
+      };
+      submittingUser(user);
+    }
+  };
+  //validate new user fields
+  const validateForm = () => {
+    if (firstName.length === 0) {
+      window.alert("All fields must be entered. Please add a first name.");
+      return false;
+    }
+    if (lastName.length === 0) {
+      window.alert("All fields must be entered. Please add a last name.");
+      return false;
+    }
+    if (username.length === 0) {
+      window.alert("All fields must be entered. Please add a username name.");
+      return false;
+    }
+    if (password.length === 0) {
+      window.alert("All fields must be entered. Please add a password.");
+      return false;
+    }
+    return true;
   };
 
   //Add user
@@ -98,6 +123,7 @@ export default function Auth(props) {
     }
   };
 
+  //demo button
   const preFill = () => {
     setUsername("john");
     setPassword(1234);
